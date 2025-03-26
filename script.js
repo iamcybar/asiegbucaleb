@@ -1,23 +1,27 @@
-// JavaScript for Scroll-Triggered Animations
-document.addEventListener("DOMContentLoaded", function () {
-    const animatedElements = document.querySelectorAll(".fade-in, .slide-in-left, .slide-in-right");
-  
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          } else {
-            entry.target.classList.remove("visible");
-          }
-        });
-      },
-      {
-        threshold: 0.1, // Trigger when 10% of the element is visible
-      }
-    );
-  
-    animatedElements.forEach((element) => {
-      observer.observe(element);
-    });
-  });
+function updateClock() {
+    const hourHand = document.querySelector('.hour-hand');
+    const minuteHand = document.querySelector('.minute-hand');
+    const secondHand = document.querySelector('.second-hand');
+
+    const now = new Date();
+
+    // Calculate angles for the hands
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    const hourAngle = (hours % 12) * 30 + (minutes / 60) * 30;
+    const minuteAngle = minutes * 6 + (seconds / 60) * 6;
+    const secondAngle = seconds * 6;
+
+    // Apply the rotation to the hands
+    hourHand.style.transform = `rotate(${hourAngle}deg)`;
+    minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
+    secondHand.style.transform = `rotate(${secondAngle}deg)`;
+}
+
+// Update the clock every second
+setInterval(updateClock, 1000);
+
+// Initialize clock at the start
+updateClock();
